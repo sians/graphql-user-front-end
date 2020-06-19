@@ -1,25 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { render } from 'react-dom';
 
-function App() {
+import './styles/main.scss'
+
+import HomePage from './pages/HomePage'
+import LoginPage from './pages/LoginPage'
+
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
+
+
+const LOGIN = gql`
+  mutation LoginMutation(
+    $email: String!
+    $password: String!
+  ) {
+    user {
+      email
+    } 
+  }
+`
+
+
+const App = () => {
+  const [ login ] = useMutation(LOGIN)
+  
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+        <div>
+          <LoginPage />
+          <HomePage />
+          <h2>Inside</h2>
+        </div>
   );
 }
 
